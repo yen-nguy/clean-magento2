@@ -1,0 +1,75 @@
+version: '3.6'
+
+services:
+  magento:
+    image: registry.codeculture.de/codeculture/docker-php-magento2:php81
+    environment:
+      - START_PHP=true
+      - START_NGINX=true
+      - START_CRON=false
+      - START_SETUP=false
+      - APP_MAGE_MODE=developer
+      - PHP_MEMORY_LIMIT=2048M
+      - XDEBUG_CONFIG=remote_autostart=true remote_enable=true idekey=PHPSTORM remote_host=host.docker.internal remote_port=9000
+      #- XDEBUG_CONFIG=remote_autostart=true remote_enable=true idekey=PHPSTORM remote_host=host.docker.internal remote_port=9000 remote_log=/tmp/xdebug_remote.log
+    volumes:
+      - ./docker/nginx/local/cert:/etc/nginx/cert:cached
+      - ./docker/nginx/local/conf:/etc/nginx/conf.d:cached
+      - ./src:/www:delegated
+      - ./deployment:/deployment:delegated
+    links:
+      - db:mysql
+      - redis:redis
+      - redis-page:redis-page
+    ports:
+      - 443:443
+      - 1080:1080
+      - 9000:9000
+    hostname: magento.local
+  # Rabbitmq
+  rabbitmq:
+    image: rabbitmq:alpine
+    environment:
+      RABBITMQ_DEFAULT_PASS: (AUsfh8uewhr=H/AS/Hfe9ia
+      RABBITMQ_DEFAULT_USER: magento
+    stdin_open: true
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+  db:
+    image: mariadb:10.4
+    volumes:
+      - ./docker/mysql:/docker-entrypoint-initdb.d:cached
+    environment:
+      MYSQL_ROOT_PASSWORD: a8sdfga8fh8asf
+      MYSQL_DATABASE: magento2
+    ports:
+      - 3306:3306
+  varnish:
+    build:
+      context: docker/varnish/
+      dockerfile: Dockerfile
+    image: registry.codeculture.de/codeculture/varnish:6.6
+    links:
+      - magento
+    ports:
+      - 8080:8080
+    volumes:
+      - ./docker/varnish:/etc/varnish/configs:cached
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.11
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+  # Selenium server
+  selenium:
+    image: seleniarm/standalone-chromium:latest # commit for arm64
+    # image: selenium/standalone-chrome:latest # uncommit for arm64
+    shm_size: 2gb
+    ports:
+      - 4444:4444
+      - 7900:7900
+  redis:
+    image: redis:alpine
+  redis-page:
+    image: redis:alpine

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="standard">
+<!--        it will define the route in frontend ex: when the route name is "magento.local/custommodule"-->
+        <route id="custommodule" frontName="custommodule">
+            <module name="Codeculture_CustomModule"/>
+        </route>
+
+    </router>
+</config>
