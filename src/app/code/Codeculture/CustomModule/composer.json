@@ -1,0 +1,17 @@
+{
+  "name": "codeculture/module-custom-module",
+  "version": "1.0.0",
+  "description": "simple custom module",
+  "type": "magento2-module",
+  "require": {
+    "magento/framework": "*"
+  },
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Codeculture\\CustomModule\\": ""
+    }
+  }
+}

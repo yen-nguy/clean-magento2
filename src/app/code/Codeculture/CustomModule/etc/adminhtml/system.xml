@@ -1,0 +1,22 @@
+<!--Adds a new section in the Magento admin under Stores > Configuration > Custom Module.-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="custommodule" translate="label" sortOrder="100">
+            <label>Custom Module</label>
+        </tab>
+<!--        here is the path to the custom module-->
+        <section id="custommodule" translate="label" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Custom Module Settings</label>
+            <tab>custommodule</tab>
+            <resource>Codeculture_CustomModule::config</resource>
+            <group id="general" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="custom_title" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Custom Page Title</label>
+                    <tooltip>Specify a custom title that will override the default page title.</tooltip>
+                    <frontend_class>validate-length maximum-length-50</frontend_class>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
