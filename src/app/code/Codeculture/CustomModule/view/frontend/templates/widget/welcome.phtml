@@ -1,0 +1,38 @@
+<?php
+/**
+ * @var $block \Codeculture\CustomModule\Block\Widget\Welcome
+ */
+
+// Fetch dynamic options from the block
+$title = $block->getTitle();
+$message = $block->getMessage();
+$textColor = $block->getTextColor();
+?>
+
+<?php if ($title || $message): ?>
+    <div class="custom-widget">
+        <!-- Dynamically set the title and color -->
+        <h2 style="color: <?= $block->escapeHtml($textColor) ?>;">
+            <?= $block->escapeHtml($title) ?>
+        </h2>
+
+        <!-- Dynamically set the message -->
+        <p>
+            <?= $block->escapeHtml($message) ?>
+        </p>
+    </div>
+<?php endif; ?>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "welcome_widget": {
+                        "component": "Codeculture_CustomModule/js/widget"
+                    }
+                }
+            }
+        }
+    }
+</script>

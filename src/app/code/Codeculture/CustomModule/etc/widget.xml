@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="custom_welcome_widget" class="Codeculture\CustomModule\Block\Widget\Welcome">
+        <label>Custom Welcome Widget Test</label>
+        <description>This widget displays a custom welcome message with optional styling.</description>
+        <parameters>
+            <!-- Single-line text input for widget title -->
+            <parameter name="title" xsi:type="text" visible="true">
+                <label>Widget Title Test</label>
+            </parameter>
+
+            <!-- Single-line text input for widget message -->
+            <parameter name="message" xsi:type="text" visible="true">
+                <label>Widget Message</label>
+            </parameter>
+
+            <!-- Dropdown for text color -->
+            <parameter name="text_color" xsi:type="select" visible="true">
+                <label>Text Color</label>
+                <options>
+                    <option name="red" value="red">
+                        <label>Red</label>
+                    </option>
+                    <option name="blue" value="blue">
+                        <label>Blue</label>
+                    </option>
+                    <option name="green" value="green">
+                        <label>Green</label>
+                    </option>
+                </options>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>
